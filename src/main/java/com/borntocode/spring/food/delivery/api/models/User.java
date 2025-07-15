@@ -1,5 +1,6 @@
 package com.borntocode.spring.food.delivery.api.models;
 
+import com.borntocode.spring.food.delivery.api.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 
