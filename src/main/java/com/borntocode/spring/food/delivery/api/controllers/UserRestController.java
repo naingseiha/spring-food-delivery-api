@@ -6,9 +6,9 @@ import com.borntocode.spring.food.delivery.api.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @Slf4j
@@ -22,5 +22,34 @@ public class UserRestController {
         log.info("Creating user {}", userRequest);
         UserResponse userResponse = userService.create(userRequest);
         return ResponseEntity.ok(userResponse);
+    }
+
+    @PutMapping(value = "/v1/users/{id}", consumes = "application/json", produces = "application/json")
+    private ResponseEntity<UserResponse> update(@RequestBody UserRequest userRequest, @PathVariable Long id) {
+        log.info("Updating user with id {}: {}", id, userRequest);
+
+        UserResponse userResponse = userService.update(id, userRequest);
+        return ResponseEntity.ok(userResponse);
+    }
+
+    @GetMapping(value = "/v1/users/{id}", produces = "application/json")
+    private ResponseEntity<UserResponse> getById(@PathVariable Long id) {
+        log.info("Fetching user with id {}", id);
+        UserResponse userResponse = userService.findById(id);
+        return ResponseEntity.ok(userResponse);
+    }
+
+    @GetMapping(value = "/v1/users", produces = "application/json")
+    private ResponseEntity<List<UserResponse>> getAll() {
+        log.info("Fetching all users");
+        List<UserResponse> userResponses = userService.findAll();
+        return ResponseEntity.ok(userResponses);
+    }
+
+    @DeleteMapping(value = "/v1/users/{id}", produces = "application/json")
+    private ResponseEntity<Void> delete(@PathVariable Long id) {
+        log.info("Deleting user with id {}", id);
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
