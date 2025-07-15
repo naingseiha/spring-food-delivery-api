@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @ToString
 @Table(name = "tbl_device")
-public class device extends BaseEntity {
+public class Device extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
