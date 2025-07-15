@@ -2,6 +2,7 @@ package com.borntocode.spring.food.delivery.api.controllers;
 
 import com.borntocode.spring.food.delivery.api.dto.UserRequest;
 import com.borntocode.spring.food.delivery.api.dto.UserResponse;
+import com.borntocode.spring.food.delivery.api.exceptions.ApiExceptionError;
 import com.borntocode.spring.food.delivery.api.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +19,21 @@ public class UserRestController {
     private final UserService userService;
 
     @PostMapping(value = "/v1/users", consumes = "application/json", produces = "application/json")
-    private ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest) {
-        log.info("Creating user {}", userRequest);
-        UserResponse userResponse = userService.create(userRequest);
-        return ResponseEntity.ok(userResponse);
+    private ResponseEntity<Object> create(@RequestBody UserRequest userRequest) {
+        try {
+            log.info("Creating user {}", userRequest);
+            UserResponse userResponse = userService.create(userRequest);
+            return ResponseEntity.ok(userResponse);
+        }catch (Exception ex) {
+            log.error("Error while creating user {}", userRequest, ex);
+            var apiErrorException = ApiExceptionError.builder()
+                    .errorCode("400")
+                    .message(ex.getLocalizedMessage())
+                    .responseData(new Object())
+                    .statusCode("400")
+                    .build();
+            return ResponseEntity.ok(apiErrorException);
+        }
     }
 
     @PutMapping(value = "/v1/users/{id}", consumes = "application/json", produces = "application/json")
