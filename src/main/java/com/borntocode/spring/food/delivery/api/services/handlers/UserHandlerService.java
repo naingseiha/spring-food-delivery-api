@@ -6,6 +6,7 @@ import com.borntocode.spring.food.delivery.api.dto.UserRequest;
 import com.borntocode.spring.food.delivery.api.dto.UserResponse;
 import com.borntocode.spring.food.delivery.api.models.Device;
 import com.borntocode.spring.food.delivery.api.models.User;
+import com.borntocode.spring.food.delivery.api.utils.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -35,17 +36,6 @@ public class UserHandlerService {
         }
         log.info("Phone number is empty or null");
         throw new IllegalArgumentException("Phone number must not be empty or null");
-    }
-
-    public Date convertStringToDate(String dateOfBirth) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return dateFormat.parse(dateOfBirth);
-        } catch (Exception e) {
-            log.error("Error parsing date: {}", e.getMessage());
-        }
-
-        return new Date();
     }
 
     public UserResponse convertUsertoUserResponse(final User user) {
@@ -78,7 +68,7 @@ public class UserHandlerService {
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setEmail(userRequest.getEmail());
         user.setAddress(userRequest.getAddress());
-        user.setDateOfBirth(convertStringToDate(userRequest.getDateOfBirth()));
+        user.setDateOfBirth(DateTimeUtils.convertStringToDate(userRequest.getDateOfBirth()));
         user.setUserType(userRequest.getUserType());
         user.setStatus(USER_STATUS_ACTIVE);
         user.setCreatedBy(SYSTEM);

@@ -9,6 +9,7 @@ import com.borntocode.spring.food.delivery.api.repositories.DeviceRepository;
 import com.borntocode.spring.food.delivery.api.repositories.UserRepository;
 import com.borntocode.spring.food.delivery.api.services.handlers.UserHandlerService;
 import com.borntocode.spring.food.delivery.api.services.UserService;
+import com.borntocode.spring.food.delivery.api.utils.DateTimeUtils;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
         userUpdate.setUsername(userRequest.getUsername());
         userUpdate.setPhoneNumber(userRequest.getPhoneNumber());
         userUpdate.setEmail(userRequest.getEmail());
-        userUpdate.setDateOfBirth(userHandlerService.convertStringToDate(userRequest.getDateOfBirth()));
+        userUpdate.setDateOfBirth(DateTimeUtils.convertStringToDate(userRequest.getDateOfBirth()));
         userUpdate.setAddress(userRequest.getAddress());
         userUpdate.setUserType(userRequest.getUserType());
         userUpdate.setGender(userRequest.getGender());
