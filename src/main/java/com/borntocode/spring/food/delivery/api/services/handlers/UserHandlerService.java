@@ -14,8 +14,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.borntocode.spring.food.delivery.api.Constant.SYSTEM;
-import static com.borntocode.spring.food.delivery.api.Constant.USER_STATUS_ACTIVE;
+import static com.borntocode.spring.food.delivery.api.constants.Constant.SYSTEM;
+import static com.borntocode.spring.food.delivery.api.constants.Constant.USER_STATUS_ACTIVE;
 
 @Service
 @Slf4j
